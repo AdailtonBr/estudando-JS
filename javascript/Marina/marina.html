@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Pergunta Muito Importante</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+text-align:center;
+background:linear-gradient(135deg,#ff8fc7,#ffd9ef);
+overflow:hidden;
+}
+
+h1{
+margin-top:120px;
+font-size:50px;
+color:white;
+text-shadow:2px 2px 10px rgba(0,0,0,0.4);
+}
+
+button{
+font-size:26px;
+padding:15px 40px;
+margin:20px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+transition:0.2s;
+}
+
+#sim{
+background:#4CAF50;
+color:white;
+}
+
+#nao{
+background:#ff4d4d;
+color:white;
+position:absolute;
+}
+
+#resultado{
+display:none;
+margin-top:40px;
+animation:zoom 1s ease;
+}
+
+#resultado h1{
+font-size:80px;
+color:white;
+}
+
+img{
+max-width:400px;
+border-radius:15px;
+margin-top:20px;
+box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+@keyframes zoom{
+from{
+transform:scale(0);
+opacity:0;
+}
+to{
+transform:scale(1);
+opacity:1;
+}
+}
+
+.coracao{
+position:fixed;
+top:-20px;
+font-size:20px;
+animation:cair linear forwards;
+}
+
+@keyframes cair{
+to{
+transform:translateY(110vh);
+opacity:0;
+}
+}
+
+.fogo{
+position:fixed;
+font-size:30px;
+animation:explodir 1s ease forwards;
+}
+
+@keyframes explodir{
+0%{
+transform:scale(0);
+opacity:1;
+}
+100%{
+transform:scale(2);
+opacity:0;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<h1 id="pergunta">A Marina é a mais linda do mundo?</h1>
+
+<button id="sim">Sim</button>
+<button id="nao">Não</button>
+
+<div id="resultado">
+<h1>ACERTOU!!!</h1>
+<img src="foto.jpg">
+</div>
+
+<audio id="musica" src="musica.mp3"></audio>
+
+<script>
+
+const botaoNao = document.getElementById("nao")
+const botaoSim = document.getElementById("sim")
+
+let tamanhoSim = 1
+let tamanhoNao = 1
+
+function moverNao(){
+
+const largura = window.innerWidth - botaoNao.offsetWidth
+const altura = window.innerHeight - botaoNao.offsetHeight
+
+const x = Math.random()*largura
+const y = Math.random()*altura
+
+botaoNao.style.left = x+"px"
+botaoNao.style.top = y+"px"
+
+tamanhoSim += 0.1
+botaoSim.style.transform = "scale("+tamanhoSim+")"
+
+tamanhoNao -= 0.05
+if(tamanhoNao<0.3) tamanhoNao=0.3
+botaoNao.style.transform = "scale("+tamanhoNao+")"
+
+}
+
+botaoNao.addEventListener("mouseover", moverNao)
+botaoNao.addEventListener("click", moverNao)
+
+botaoSim.addEventListener("click", responderSim)
+
+function responderSim(){
+
+document.getElementById("pergunta").style.display="none"
+botaoNao.style.display="none"
+botaoSim.style.display="none"
+
+document.getElementById("resultado").style.display="block"
+
+document.getElementById("musica").play()
+
+coracoes()
+fogos()
+
+}
+
+function coracoes(){
+
+setInterval(()=>{
+
+const c=document.createElement("div")
+c.className="coracao"
+c.innerHTML="❤️"
+
+c.style.left=Math.random()*100+"vw"
+c.style.fontSize=(Math.random()*20+10)+"px"
+c.style.animationDuration=(Math.random()*3+2)+"s"
+
+document.body.appendChild(c)
+
+setTimeout(()=>c.remove(),5000)
+
+},200)
+
+}
+
+function fogos(){
+
+setInterval(()=>{
+
+const f=document.createElement("div")
+f.className="fogo"
+f.innerHTML="🎆"
+
+f.style.left=Math.random()*100+"vw"
+f.style.top=Math.random()*80+"vh"
+
+document.body.appendChild(f)
+
+setTimeout(()=>f.remove(),1000)
+
+},300)
+
+}
+
+</script>
+
+</body>
+</html>
